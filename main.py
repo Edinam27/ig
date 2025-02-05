@@ -26,19 +26,18 @@ from ai_features import AIFeatureManager, init_ai_features
 from content_generator import ContentGenerator, render_content_generator_page
 from tensorflow_config import TensorFlowConfigManager
 
-
-# Configure TensorFlow with a memory limit
-config_manager = TensorFlowConfigManager(memory_limit=4)  # Limit GPU memory to 4GB
+# Configure TensorFlow with a memory limit (4GB GPU limit)
+config_manager = TensorFlowConfigManager(memory_limit=4)
 config_manager.configure_tensorflow()
 
-# Define a simple Sequential model with unique layer names if needed by updating them later:
+# Define a simple Sequential model with unique layer names
 model = tf.keras.Sequential([
     tf.keras.layers.Dense(64, activation='relu', input_shape=(9,), name="dense_64"),
     tf.keras.layers.Dropout(0.2, name="dropout_0.2"),
     tf.keras.layers.Dense(32, activation='relu', name="dense_32"),
     tf.keras.layers.Dense(1, activation='sigmoid', name="dense_output")
 ])
-
+model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
 
 class AppConfig:
     """Enhanced application configuration management with TensorFlow support."""
@@ -152,9 +151,8 @@ class AppConfig:
         """Get the TensorFlow configuration manager instance."""
         return self.tf_config
 
-
 class SocialAutomationApp:
-    """Main application class."""
+    """Main application class for social media automation."""
     def __init__(self):
         self.config = AppConfig()
         self.setup_managers()
@@ -276,13 +274,15 @@ class SocialAutomationApp:
         """Render recent activity section."""
         st.subheader("Recent Activity")
         conn = sqlite3.connect('social_automation.db')
-        activities = pd.read_sql_query('''
+        activities = pd.read_sql_query(
+            '''
             SELECT action_type, platform, timestamp 
             FROM activity_log 
             WHERE user_id = ? 
             ORDER BY timestamp DESC 
             LIMIT 5
-        ''', conn, params=(st.session_state.user_id,))
+            ''', conn, params=(st.session_state.user_id,)
+        )
         conn.close()
         if not activities.empty:
             for _, activity in activities.iterrows():
@@ -297,13 +297,15 @@ class SocialAutomationApp:
         """Render upcoming scheduled posts."""
         st.subheader("Upcoming Posts")
         conn = sqlite3.connect('social_automation.db')
-        posts = pd.read_sql_query('''
+        posts = pd.read_sql_query(
+            '''
             SELECT platform, content_type, scheduled_time 
             FROM scheduled_posts 
             WHERE user_id = ? AND status = 'pending' 
             ORDER BY scheduled_time 
             LIMIT 5
-        ''', conn, params=(st.session_state.user_id,))
+            ''', conn, params=(st.session_state.user_id,)
+        )
         conn.close()
         if not posts.empty:
             for _, post in posts.iterrows():
@@ -395,6 +397,7 @@ class SocialAutomationApp:
     def run(self):
         """Run the application."""
         try:
+            # If not authenticated, display login/registration tabs
             if not st.session_state.authenticated:
                 tab1, tab2 = st.tabs(["Login", "Register"])
                 with tab1:
@@ -407,7 +410,6 @@ class SocialAutomationApp:
         except Exception as e:
             logging.error(f"Application error: {str(e)}")
             st.error("An error occurred. Please try again later.")
-
 
 if __name__ == "__main__":
     app = SocialAutomationApp()
