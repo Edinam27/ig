@@ -1,0 +1,30 @@
+category_rules:
+  business:
+    required_elements:
+    - branding
+    - value_proposition
+    tone: professional
+  personal:
+    required_elements:
+    - personal_story
+    - engagement_question
+    tone: casual
+forbidden_words:
+- spam
+- inappropriate
+max_length: 2000
+min_length: 50
+platform_specific:
+  instagram:
+    image_required: true
+    max_hashtags: 30
+  twitter:
+    max_hashtags: 3
+    max_length: 280
+required_elements:
+- hashtags
+- call_to_action
+tone_preferences:
+- professional
+- engaging
+- friendly

@@ -1,0 +1,8 @@
+cpu:
+  num_threads: 6
+eager_execution: true
+gpu:
+  allow_growth: true
+  memory_growth: true
+  memory_limit: 0.7
+mixed_precision: false

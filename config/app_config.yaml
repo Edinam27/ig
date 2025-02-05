@@ -1,0 +1,14 @@
+logging:
+  file: logs/app.log
+  format: '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+  level: INFO
+paths:
+  downloads: downloads
+  logs: logs
+  models: models
+  temp: temp
+  uploads: uploads
+tensorflow:
+  eager_execution: true
+  gpu_memory_limit: 0.7
+  memory_growth: true

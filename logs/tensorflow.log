@@ -1,0 +1,68 @@
+2025-02-05 11:44:41,340 - tensorflow_config - INFO - GPU configuration successful. Found 1 GPU(s)
+2025-02-05 11:44:41,373 - root - ERROR - Config loading error: [Errno 2] No such file or directory: 'config/app_config.yaml'
+2025-02-05 11:44:41,375 - root - WARNING - Bot detection model not found. Using fallback detection methods.
+2025-02-05 11:44:41,376 - root - ERROR - Error loading suspicious patterns: name 'Path' is not defined
+2025-02-05 11:44:41,377 - root - ERROR - Stripe setup error: No API key provided. (HINT: set your API key using "stripe.api_key = <API-KEY>"). You can generate API keys from the Stripe web interface.  See https://stripe.com/api for details, or email support@stripe.com if you have any questions.
+2025-02-05 11:44:41,377 - root - INFO - Database setup completed successfully
+2025-02-05 11:44:41,380 - ai_features - INFO - Content guidelines loaded successfully
+2025-02-05 11:44:41,381 - ai_features - ERROR - Error loading model: No model config found in the file at models/engagement_predictor.h5.
+2025-02-05 11:44:41,435 - absl - WARNING - You are saving your model as an HDF5 file via `model.save()` or `keras.saving.save_model(model)`. This file format is considered legacy. We recommend using instead the native Keras format, e.g. `model.save('my_model.keras')` or `keras.saving.save_model(model, 'my_model.keras')`. 
+2025-02-05 11:44:41,437 - ai_features - ERROR - Error creating model: numpy() is only available when eager execution is enabled.
+2025-02-05 11:44:41,438 - ai_features - ERROR - Error getting engagement model: numpy() is only available when eager execution is enabled.
+2025-02-05 11:44:41,491 - absl - WARNING - You are saving your model as an HDF5 file via `model.save()` or `keras.saving.save_model(model)`. This file format is considered legacy. We recommend using instead the native Keras format, e.g. `model.save('my_model.keras')` or `keras.saving.save_model(model, 'my_model.keras')`. 
+2025-02-05 11:44:41,493 - ai_features - ERROR - Error creating model: numpy() is only available when eager execution is enabled.
+2025-02-05 11:44:41,493 - root - ERROR - Model initialization error: numpy() is only available when eager execution is enabled.
+2025-02-05 11:48:47,111 - tensorflow_config - ERROR - GPU configuration failed: Cannot set memory growth on device when virtual devices configured
+2025-02-05 11:48:47,112 - tensorflow_config - INFO - TensorFlow configured for CPU-only operation
+2025-02-05 11:48:47,156 - root - ERROR - TensorFlow configuration error: tf.enable_eager_execution must be called at program startup.
+2025-02-05 11:54:52,443 - tensorflow_config - WARNING - GPU configuration failed: Cannot set memory growth on device when virtual devices configured
+2025-02-05 11:54:52,443 - tensorflow_config - WARNING - GPU configuration failed: Cannot set memory growth on device when virtual devices configured
+2025-02-05 11:54:52,444 - tensorflow_config - INFO - CPU configuration successful
+2025-02-05 11:54:52,444 - tensorflow_config - INFO - CPU configuration successful
+2025-02-05 11:54:52,528 - root - ERROR - TensorFlow configuration error: Cannot set memory growth on device when virtual devices configured
+2025-02-05 11:58:59,978 - tensorflow_config - WARNING - GPU configuration failed: Cannot set memory growth on device when virtual devices configured
+2025-02-05 11:58:59,978 - tensorflow_config - WARNING - GPU configuration failed: Cannot set memory growth on device when virtual devices configured
+2025-02-05 11:58:59,978 - tensorflow_config - WARNING - GPU configuration failed: Cannot set memory growth on device when virtual devices configured
+2025-02-05 11:58:59,979 - tensorflow_config - INFO - CPU configuration successful
+2025-02-05 11:58:59,979 - tensorflow_config - INFO - CPU configuration successful
+2025-02-05 11:58:59,979 - tensorflow_config - INFO - CPU configuration successful
+2025-02-05 12:57:24,022 - tensorflow_config - WARNING - GPU configuration failed: Cannot set memory growth on device when virtual devices configured
+2025-02-05 12:57:24,022 - tensorflow_config - WARNING - GPU configuration failed: Cannot set memory growth on device when virtual devices configured
+2025-02-05 12:57:24,022 - tensorflow_config - WARNING - GPU configuration failed: Cannot set memory growth on device when virtual devices configured
+2025-02-05 12:57:24,022 - tensorflow_config - WARNING - GPU configuration failed: Cannot set memory growth on device when virtual devices configured
+2025-02-05 12:57:24,024 - tensorflow_config - INFO - CPU configuration successful
+2025-02-05 12:57:24,024 - tensorflow_config - INFO - CPU configuration successful
+2025-02-05 12:57:24,024 - tensorflow_config - INFO - CPU configuration successful
+2025-02-05 12:57:24,024 - tensorflow_config - INFO - CPU configuration successful
+2025-02-05 12:57:51,429 - tensorflow_config - WARNING - GPU configuration failed: Cannot set memory growth on device when virtual devices configured
+2025-02-05 12:57:51,429 - tensorflow_config - WARNING - GPU configuration failed: Cannot set memory growth on device when virtual devices configured
+2025-02-05 12:57:51,429 - tensorflow_config - WARNING - GPU configuration failed: Cannot set memory growth on device when virtual devices configured
+2025-02-05 12:57:51,429 - tensorflow_config - WARNING - GPU configuration failed: Cannot set memory growth on device when virtual devices configured
+2025-02-05 12:57:51,429 - tensorflow_config - WARNING - GPU configuration failed: Cannot set memory growth on device when virtual devices configured
+2025-02-05 12:57:51,430 - tensorflow_config - INFO - CPU configuration successful
+2025-02-05 12:57:51,430 - tensorflow_config - INFO - CPU configuration successful
+2025-02-05 12:57:51,430 - tensorflow_config - INFO - CPU configuration successful
+2025-02-05 12:57:51,430 - tensorflow_config - INFO - CPU configuration successful
+2025-02-05 12:57:51,430 - tensorflow_config - INFO - CPU configuration successful
+2025-02-05 12:57:51,753 - tensorflow_config - WARNING - GPU configuration failed: Cannot set memory growth on device when virtual devices configured
+2025-02-05 12:57:51,753 - tensorflow_config - WARNING - GPU configuration failed: Cannot set memory growth on device when virtual devices configured
+2025-02-05 12:57:51,753 - tensorflow_config - WARNING - GPU configuration failed: Cannot set memory growth on device when virtual devices configured
+2025-02-05 12:57:51,753 - tensorflow_config - WARNING - GPU configuration failed: Cannot set memory growth on device when virtual devices configured
+2025-02-05 12:57:51,753 - tensorflow_config - WARNING - GPU configuration failed: Cannot set memory growth on device when virtual devices configured
+2025-02-05 12:57:51,753 - tensorflow_config - WARNING - GPU configuration failed: Cannot set memory growth on device when virtual devices configured
+2025-02-05 12:57:51,754 - tensorflow_config - INFO - CPU configuration successful
+2025-02-05 12:57:51,754 - tensorflow_config - INFO - CPU configuration successful
+2025-02-05 12:57:51,754 - tensorflow_config - INFO - CPU configuration successful
+2025-02-05 12:57:51,754 - tensorflow_config - INFO - CPU configuration successful
+2025-02-05 12:57:51,754 - tensorflow_config - INFO - CPU configuration successful
+2025-02-05 12:57:51,754 - tensorflow_config - INFO - CPU configuration successful
+2025-02-05 12:57:51,798 - root - INFO - TensorFlow configuration completed successfully
+2025-02-05 12:57:51,799 - root - INFO - System information: {'platform': 'Linux-6.8.0-52-generic-x86_64-with-glibc2.39', 'python_version': '3.12.3', 'tensorflow_version': '2.18.0', 'cpu_count': 12, 'memory_total': 14.85995101928711, 'cuda_available': True, 'gpu_devices': ["PhysicalDevice(name='/physical_device:GPU:0', device_type='GPU')"], 'eager_execution': True}
+2025-02-05 12:57:51,803 - root - WARNING - Bot detection model not found. Using fallback detection methods.
+2025-02-05 12:57:51,804 - root - ERROR - Error loading suspicious patterns: name 'Path' is not defined
+2025-02-05 12:57:51,804 - root - ERROR - Stripe setup error: No API key provided. (HINT: set your API key using "stripe.api_key = <API-KEY>"). You can generate API keys from the Stripe web interface.  See https://stripe.com/api for details, or email support@stripe.com if you have any questions.
+2025-02-05 12:57:51,805 - root - INFO - Database setup completed successfully
+2025-02-05 12:57:51,808 - ai_features - INFO - Content guidelines loaded successfully
+2025-02-05 12:57:51,810 - ai_features - ERROR - Error loading model: No model config found in the file at models/engagement_predictor.h5.
+2025-02-05 12:57:51,846 - absl - WARNING - You are saving your model as an HDF5 file via `model.save()` or `keras.saving.save_model(model)`. This file format is considered legacy. We recommend using instead the native Keras format, e.g. `model.save('my_model.keras')` or `keras.saving.save_model(model, 'my_model.keras')`. 
+2025-02-05 12:57:51,866 - ai_features - INFO - Created and saved new engagement model
