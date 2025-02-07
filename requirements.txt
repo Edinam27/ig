@@ -37,3 +37,4 @@ instagram_private_api
 seaborn
 tf-keras
 psutil
+imageio[ffmpeg]
