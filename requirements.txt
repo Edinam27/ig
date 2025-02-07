@@ -30,7 +30,7 @@ email-validator
 pyotp
 bcrypt
 TikTokApi
-opencv-python
+opencv-python-headless
 moviepy
 Twitter
 instagram_private_api
