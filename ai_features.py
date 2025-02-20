@@ -166,7 +166,7 @@ class AIFeatureManager:
         self.initialize_nlp()
         
     def _setup_paths(self) -> None:
-        """Create necessary directories for AI features."""
+        """Ensure necessary directories exist for AI features."""
         paths = ['models', 'config', 'data/guidelines']
         for path in paths:
             Path(path).mkdir(parents=True, exist_ok=True)
@@ -323,23 +323,28 @@ class AIFeatureManager:
             logging.error(f"Engagement model setup error: {str(e)}")
             raise
 
-    def initialize_nlp(self):
-        """Initialize NLP components."""
+    def initialize_nlp(self) -> None:
+        """
+        Initialize NLP components by loading the Spacy model.
+        If 'en_core_web_sm' is not available, download it automatically.
+        """
         try:
-            # Try loading English model, download if not present
+            self.logger.info("Attempting to load the Spacy model 'en_core_web_sm'...")
+            self.nlp = spacy.load("en_core_web_sm")
+        except IOError as e:
+            self.logger.info("Model 'en_core_web_sm' not found. Attempting to download it...")
             try:
+                spacy.cli.download("en_core_web_sm")
                 self.nlp = spacy.load("en_core_web_sm")
-            except OSError:
-                os.system("python -m spacy download en_core_web_sm")
-                self.nlp = spacy.load("en_core_web_sm")
-                
-            self.vectorizer = TfidfVectorizer(
-                max_features=1000,
-                stop_words='english'
-            )
+                self.logger.info("Successfully downloaded and loaded 'en_core_web_sm'.")
+            except Exception as download_error:
+                self.logger.error(f"Failed to download 'en_core_web_sm': {download_error}")
+                raise download_error
         except Exception as e:
-            logging.error(f"NLP initialization error: {str(e)}")
+            self.logger.error(f"Unexpected error during NLP initialization: {e}")
             raise
+
+        self.logger.info("NLP initialization completed successfully.")
 
     async def analyze_content(self, content: Dict) -> ContentAnalysis:
         """Analyze content and provide optimization suggestions."""
