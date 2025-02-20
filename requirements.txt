@@ -39,3 +39,4 @@ tf-keras
 psutil
 imageio[ffmpeg]
 moviepy
+spacy
