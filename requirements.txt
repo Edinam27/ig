@@ -39,5 +39,5 @@ tf-keras
 psutil
 imageio[ffmpeg]
 moviepy
-spacy download en_core_web_sm
+spacy
 
