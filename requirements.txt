@@ -38,3 +38,4 @@ seaborn
 tf-keras
 psutil
 imageio[ffmpeg]
+moviepy
