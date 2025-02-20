@@ -8,9 +8,7 @@ from pathlib import Path
 import logging
 import asyncio
 import aiohttp
-
-
-from moviepy import VideoFileClip, TextClip, CompositeVideoClip
+from moviepy.editor import VideoFileClip, TextClip, CompositeVideoClip
 from PIL import Image
 import torch
 from transformers import pipeline
