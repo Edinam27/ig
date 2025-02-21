@@ -157,18 +157,66 @@ class TensorFlowConfigManager:
 class AIFeatureManager:
     """Manages AI-powered features with content guidelines."""
     
-    def __init__(self):
-        """Initialize AI Feature Manager with content guidelines."""
-        self.logger = logging.getLogger(__name__)
+    def __init__(self, config_path: str = 'config/ai_config.yaml'):
+        """
+        Initialize AI Feature Manager with configuration.
+        
+        Args:
+            config_path: Path to configuration file
+        """
+        self.logger = self._setup_logging()
+        self.config = self._load_config(config_path)
         self._setup_paths()
-        self.load_content_guidelines()
-        self.setup_models()
-        self.initialize_nlp()
+        self._initialize_models()
+    
+    def _setup_logging(self) -> logging.Logger:
+        """Configure logging with proper formatting."""
+        logger = logging.getLogger(__name__)
+        if not logger.handlers:
+            handler = logging.StreamHandler()
+            formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+            handler.setFormatter(formatter)
+            logger.addHandler(handler)
+            logger.setLevel(logging.INFO)
+        return logger
+    
+    def _load_config(self, config_path: str) -> Dict[str, Any]:
+        """Load configuration from YAML file."""
+        try:
+            with open(config_path, 'r') as f:
+                return yaml.safe_load(f)
+        except FileNotFoundError:
+            self.logger.warning(f"Config file not found at {config_path}. Using defaults.")
+            return self._create_default_config()
+        except Exception as e:
+            self.logger.error(f"Error loading config: {str(e)}")
+            return self._create_default_config()
+    
+    def _create_default_config(self) -> Dict[str, Any]:
+        """Create default configuration."""
+        return {
+            'models': {
+                'sentiment': 'distilbert-base-uncased-finetuned-sst-2-english',
+                'quality': 'bert-base-uncased',
+                'engagement': {
+                    'path': 'models/engagement_predictor.h5',
+                    'input_shape': (9,)
+                }
+            },
+            'paths': {
+                'models': 'models',
+                'data': 'data',
+                'cache': 'cache'
+            },
+            'nlp': {
+                'spacy_model': 'en_core_web_sm',
+                'max_length': 512
+            }
+        }
         
     def _setup_paths(self) -> None:
-        """Ensure necessary directories exist for AI features."""
-        paths = ['models', 'config', 'data/guidelines']
-        for path in paths:
+        """Create necessary directories."""
+        for path in self.config['paths'].values():
             Path(path).mkdir(parents=True, exist_ok=True)
             
     def setup_models(self):
@@ -184,7 +232,118 @@ class AIFeatureManager:
             logging.error(f"Model initialization error: {str(e)}")
             raise
 
-            
+
+    def _initialize_models(self) -> None:
+        """Initialize all AI models."""
+        try:
+            self._init_sentiment_analyzer()
+            self._init_quality_model()
+            self._init_engagement_model()
+            self._init_nlp()
+        except Exception as e:
+            self.logger.error(f"Model initialization error: {str(e)}")
+            raise
+    def _init_sentiment_analyzer(self) -> None:
+        """Initialize sentiment analysis pipeline."""
+        try:
+            self.sentiment_analyzer = pipeline(
+                'sentiment-analysis',
+                model=self.config['models']['sentiment']
+            )
+        except Exception as e:
+            self.logger.error(f"Sentiment analyzer initialization error: {str(e)}")
+            raise
+    
+    def _init_quality_model(self) -> None:
+        """Initialize content quality model."""
+        try:
+            model_name = self.config['models']['quality']
+            self.quality_model = AutoModelForSequenceClassification.from_pretrained(model_name)
+            self.quality_tokenizer = AutoTokenizer.from_pretrained(model_name)
+        except Exception as e:
+            self.logger.error(f"Quality model initialization error: {str(e)}")
+            raise
+    
+    def _init_engagement_model(self) -> None:
+        """Initialize engagement prediction model."""
+        try:
+            model_path = self.config['models']['engagement']['path']
+            if os.path.exists(model_path):
+                self.engagement_model = tf.keras.models.load_model(model_path)
+            else:
+                self._create_engagement_model()
+        except Exception as e:
+            self.logger.error(f"Engagement model initialization error: {str(e)}")
+            raise        
+        
+    def _create_engagement_model(self) -> None:
+        """Create and save new engagement model."""
+        input_shape = self.config['models']['engagement']['input_shape']
+        model = tf.keras.Sequential([
+            tf.keras.layers.Dense(64, activation='relu', input_shape=input_shape),
+            tf.keras.layers.BatchNormalization(),
+            tf.keras.layers.Dropout(0.2),
+            tf.keras.layers.Dense(32, activation='relu'),
+            tf.keras.layers.BatchNormalization(),
+            tf.keras.layers.Dense(1, activation='sigmoid')
+        ])
+        model.compile(
+            optimizer=tf.keras.optimizers.Adam(learning_rate=0.001),
+            loss='binary_crossentropy',
+            metrics=['accuracy']
+        )
+        self.engagement_model = model
+        model.save(self.config['models']['engagement']['path'])
+    
+    def _init_nlp(self) -> None:
+        """Initialize NLP pipeline."""
+        try:
+            self.nlp = spacy.load(self.config['nlp']['spacy_model'])
+        except OSError:
+            self.logger.info(f"Downloading spacy model {self.config['nlp']['spacy_model']}")
+            spacy.cli.download(self.config['nlp']['spacy_model'])
+            self.nlp = spacy.load(self.config['nlp']['spacy_model'])
+    
+    async def analyze_content(self, content: Dict[str, Any]) -> ContentAnalysis:
+        """
+        Analyze content and provide comprehensive analysis.
+        
+        Args:
+            content: Dictionary containing content data
+        
+        Returns:
+            ContentAnalysis object with analysis results
+        """
+        try:
+            text = content.get('text', '')
+            if not text:
+                raise ValueError("Content must include text")
+
+            sentiment_score = await self.analyze_sentiment(text)
+            engagement_pred = await self.predict_engagement(content)
+            quality_score = await self.assess_content_quality(content)
+            hashtags = await self.generate_hashtags(content)
+            posting_time = await self.determine_posting_time(content)
+            target_audience = await self.analyze_target_audience(content)
+
+            improvements = self.generate_improvements([
+                sentiment_score,
+                engagement_pred,
+                quality_score
+            ])
+
+            return ContentAnalysis(
+                sentiment_score=sentiment_score,
+                engagement_prediction=engagement_pred,
+                content_quality_score=quality_score,
+                suggested_improvements=improvements,
+                best_posting_time=posting_time,
+                hashtag_suggestions=hashtags,
+                target_audience=target_audience
+            )
+        except Exception as e:
+            self.logger.error(f"Content analysis error: {str(e)}")
+            raise
     def load_content_guidelines(self) -> None:
         """Load content guidelines from configuration file."""
         try:
